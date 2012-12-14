@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: br.com.tecsinapse.glimpse.core; singleton:=true
-Bundle-Version: 1.0.0.qualifier
