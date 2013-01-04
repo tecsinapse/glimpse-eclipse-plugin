@@ -87,6 +87,7 @@
 
 	<modules>
 		<module>br.com.tecsinapse.glimpse</module>
+		<module>br.com.tecsinapse.glimpse.feature</module>
 	</modules>
 
 </project>
