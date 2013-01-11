@@ -38,16 +38,19 @@ public class GlimpsePreferencePage extends FieldEditorPreferencePage implements
 
 	private List<String> pastUrls = new ArrayList<String>();
 	private Text urlText;
-	
+
 	public GlimpsePreferencePage() {
 		super(GRID);
-		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore(); 
+		IPreferenceStore preferenceStore = Activator.getDefault()
+				.getPreferenceStore();
 		setPreferenceStore(preferenceStore);
 		setDescription("Glimpse Preferences");
-		
-		String pastUrlsStr = preferenceStore.getString(GlimpsePreferenceConstants.PAST_URLS);
+
+		String pastUrlsStr = preferenceStore
+				.getString(GlimpsePreferenceConstants.PAST_URLS);
 		if (pastUrlsStr != null) {
-			pastUrls = new ArrayList<String>(Arrays.asList(pastUrlsStr.split("\\|")));
+			pastUrls = new ArrayList<String>(Arrays.asList(pastUrlsStr
+					.split("\\|")));
 		}
 	}
 
@@ -57,14 +60,16 @@ public class GlimpsePreferencePage extends FieldEditorPreferencePage implements
 
 	private String selectNextUrl(String currentUrl) {
 		int idx = pastUrls.indexOf(currentUrl);
-		if (idx == -1) return null;
-		if (idx == pastUrls.size() - 1) return currentUrl;
+		if (idx == -1)
+			return null;
+		if (idx == pastUrls.size() - 1)
+			return currentUrl;
 		return pastUrls.get(idx + 1);
 	}
-	
+
 	private String selectPreviousUrl(String currentUrl) {
 		int idx = pastUrls.indexOf(currentUrl);
-		if (idx == -1 && !pastUrls.isEmpty()) { 
+		if (idx == -1 && !pastUrls.isEmpty()) {
 			return pastUrls.get(pastUrls.size() - 1);
 		} else if (idx != 0) {
 			return pastUrls.get(idx - 1);
@@ -72,20 +77,23 @@ public class GlimpsePreferencePage extends FieldEditorPreferencePage implements
 			return currentUrl;
 		}
 	}
-	
+
 	private void saveUrl() {
 		String url = urlText.getText();
 		if (url != null && !url.trim().equals("") && !pastUrls.contains(url)) {
 			pastUrls.add(url);
-			getPreferenceStore().setValue(GlimpsePreferenceConstants.PAST_URLS, join(pastUrls, "|"));
+			getPreferenceStore().setValue(GlimpsePreferenceConstants.PAST_URLS,
+					join(pastUrls, "|"));
 		}
 	}
-	
+
 	private static String join(List<String> strings, String separator) {
-		if (strings.isEmpty()) return "";
+		if (strings.isEmpty())
+			return "";
 		StringBuilder result = new StringBuilder();
 		for (String string : strings) {
-			if (result.length() != 0) result.append(separator);
+			if (result.length() != 0)
+				result.append(separator);
 			result.append(string);
 		}
 		return result.toString();
@@ -99,12 +107,15 @@ public class GlimpsePreferencePage extends FieldEditorPreferencePage implements
 		}
 		return result;
 	}
-	
+
 	@Override
 	protected void createFieldEditors() {
 		StringFieldEditor urlEditor = new StringFieldEditor(
 				GlimpsePreferenceConstants.URL, "Url", getFieldEditorParent());
+		urlEditor.setEmptyStringAllowed(false);
 		urlText = urlEditor.getTextControl(getFieldEditorParent());
+		urlText.setToolTipText(
+				"Use the arrow keys (UP and DOWN) to get previous urls");
 		urlText.addListener(SWT.KeyDown, new Listener() {
 
 			@Override
