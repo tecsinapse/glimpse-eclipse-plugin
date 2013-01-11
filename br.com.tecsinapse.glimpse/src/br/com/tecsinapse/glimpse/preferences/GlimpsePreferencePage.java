@@ -80,7 +80,10 @@ public class GlimpsePreferencePage extends FieldEditorPreferencePage implements
 
 	private void saveUrl() {
 		String url = urlText.getText();
-		if (url != null && !url.trim().equals("") && !pastUrls.contains(url)) {
+		if (url != null && !url.trim().equals("")) {
+			if (pastUrls.contains(url)) {
+				pastUrls.remove(url);
+			}
 			pastUrls.add(url);
 			getPreferenceStore().setValue(GlimpsePreferenceConstants.PAST_URLS,
 					join(pastUrls, "|"));
@@ -114,8 +117,7 @@ public class GlimpsePreferencePage extends FieldEditorPreferencePage implements
 				GlimpsePreferenceConstants.URL, "Url", getFieldEditorParent());
 		urlEditor.setEmptyStringAllowed(false);
 		urlText = urlEditor.getTextControl(getFieldEditorParent());
-		urlText.setToolTipText(
-				"Use the arrow keys (UP and DOWN) to get previous urls");
+		urlText.setToolTipText("Use the arrow keys (UP and DOWN) to get previous urls");
 		urlText.addListener(SWT.KeyDown, new Listener() {
 
 			@Override
