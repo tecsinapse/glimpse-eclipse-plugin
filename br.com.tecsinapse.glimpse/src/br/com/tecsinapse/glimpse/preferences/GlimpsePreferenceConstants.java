@@ -22,5 +22,6 @@ public interface GlimpsePreferenceConstants {
 	String USERNAME = "usernamePreference";
 	String PASSWORD = "passwordPreference";
 	String CONSOLE_TYPE = "consoleTypePreference";
+	String PAST_URLS = "pastUrlsPreference";
 	
 }
